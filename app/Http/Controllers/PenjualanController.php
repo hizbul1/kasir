@@ -7,12 +7,16 @@ use Illuminate\Http\Request;
 
 class PenjualanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
      /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $penjualan=penjualan::lates('updated_at')->get();
+        $penjualan=penjualan::latest()->paginate(10);
         return view('admin.penjualan.home',compact('penjualan'));
         
         //
@@ -32,7 +36,7 @@ class PenjualanController extends Controller
      */
     public function store(Request $request)
     {
-        $penjualan=penjualan::latest()->paginate(10);
+        $penjualan=penjualan::create($request->all());
         return redirect('/penjualan')->with('status','data berhasil di tambah');
         //
     }
@@ -60,7 +64,7 @@ class PenjualanController extends Controller
      */
     public function update(Request $request, penjualan $penjualan)
     {
-        $penjualan=penjualan::update($request->all());
+        $penjualan->update($request->all());
         return redirect('/penjualan')->with('status','data berhasil di update');
         //
     }

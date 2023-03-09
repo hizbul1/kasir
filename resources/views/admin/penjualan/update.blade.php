@@ -21,19 +21,19 @@ active
                   <div class="card-body">
                     <div class="row">
                       
-                    <form method="post" action="{{route('penjualan.store')}}">
+                    <form method="post" action="{{route('penjualan.update',$penjualan->id)}}">
                         @csrf
                         <div class="mb-3 col-lg-6">
                             <label for="exampleInputEmail1" class="form-label">Nama penjualan</label>
-                            <input type="text" name="nama_penjualan" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input type="text" name="nama_penjualan" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$penjualan->nama_penjualan}}">
                         </div>
                         <div class="mb-3 col-lg-6">
                             <label for="exampleInputPassword1" class="form-label">Stok</label>
-                            <input type="Number" name="stok" class="form-control" id="exampleInputPassword1">
+                            <input type="Number" name="stok" class="form-control" id="exampleInputPassword1" value="{{$penjualan->stok}}">
                         </div>
                         <div class="mb-3 col-lg-6">
                             <label for="exampleInputPassword1" class="form-label">Harga</label>
-                            <input type="Number" name="harga" class="form-control" id="exampleInputPassword1">
+                            <input type="Number" name="harga" class="form-control" id="exampleInputPassword1" value="{{$penjualan->harga}}">
                         </div>
                        
                         <button type="submit" class="btn btn-primary">Submit</button>

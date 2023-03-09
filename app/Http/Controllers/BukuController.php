@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class BukuController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -16,6 +20,11 @@ class BukuController extends Controller
         return view('admin.buku.home',compact('buku'));
         
         //
+    }
+    public function cari(Request $request){
+        // dd($request);
+        $buku=buku::where('nama_buku','like','%'.$request->cari.'%')->get();
+        return view('admin.buku.home',compact('buku'));
     }
 
     /**
@@ -42,7 +51,7 @@ class BukuController extends Controller
      */
     public function show(buku $buku)
     {
-        return view('admin.buku.update',compact('buku'));
+        return response()->json(['data'=>$buku]);
         //
     }
 
@@ -60,7 +69,7 @@ class BukuController extends Controller
      */
     public function update(Request $request, buku $buku)
     {
-        $buku=buku::update($request->all());
+        $buku->update($request->all());
         return redirect('/buku')->with('status','data berhasil di update');
         //
     }

@@ -3,17 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\pembeli;
+use App\Models\buku;
 use Illuminate\Http\Request;
 
 class PembeliController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
      /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $pembeli=pembeli::latest()->paginate(10);
-        return view('admin.pembeli.home',compact('pembeli'));
+        return view('admin.pembelian.home',compact('pembeli'));
         
         //
     }
@@ -23,7 +28,8 @@ class PembeliController extends Controller
      */
     public function create()
     {
-        return view('admin.pembeli.tambah');
+        $buku=buku::latest()->get();
+        return view('admin.pembelian.tambah',compact('buku'));
         //
     }
 
@@ -42,7 +48,7 @@ class PembeliController extends Controller
      */
     public function show(pembeli $pembeli)
     {
-        return view('admin.pembeli.update',compact('pembeli'));
+        return view('admin.pembelian.update',compact('pembeli'));
         //
     }
 
@@ -51,7 +57,7 @@ class PembeliController extends Controller
      */
     public function edit(pembeli $pembeli)
     {
-        return view('admin.pembeli.update',compact('pembeli'));
+        return view('admin.pembelian.update',compact('pembeli'));
         //
     }
 
@@ -60,7 +66,7 @@ class PembeliController extends Controller
      */
     public function update(Request $request, pembeli $pembeli)
     {
-        $pembeli=pembeli::update($request->all());
+        $pembeli->update($request->all());
         return redirect('/pembeli')->with('status','data berhasil di update');
         //
     }
